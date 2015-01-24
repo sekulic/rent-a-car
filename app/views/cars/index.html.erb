@@ -37,7 +37,9 @@
     <% end %>
 
 <br>
+<% if  current_user.try(:admin?) %>
 <%= link_to 'Add New Car', new_car_path, :class => 'btn btn-primary' %>
+<% end %>
 <script>
 $( ".change-av" ).click(function() {
 $( ".holder" ).html('<h3>Car is avilable</h3><img src="/assets/yes.png" width="150" height="150"/>');
