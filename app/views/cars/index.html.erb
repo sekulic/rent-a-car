@@ -3,7 +3,7 @@
 
 
     <% cars.each do |car| %>
-		<div class="jumbotron">
+		<div class="well bs-component">
 			<div class="row">
 				<a href="/cars/<%= car.id%>">
 				<div class="col-lg-4">
@@ -15,7 +15,8 @@
 				<h3><%= car.name%></h3>
 				<small><%= car.description%></small>
 				</div>
-				<div class="col-lg-3 holder">
+				</a>
+				<div class="col-lg-4">
 				<% if  car.available == true %>
 				<h3>Car is avilable</h3>
 				<%= image_tag("yes.png", size: "150x150") %>
@@ -25,13 +26,10 @@
 				<h4 class="text-danger">Car is not avilable until: <br /> <%=(last_rent + no_of_days.day).to_formatted_s(:short)%></h4>
 				<%= image_tag("no.png", size: "150x150") %>		
 				<% end %>
-				</div>
-				</a>
-				<div class="col-lg-1">
 				<% if  car.available == false && current_user.try(:admin?) %>
-					<%= link_to 'AVAILABLE', make_car_available_path(car), :remote => true, class: "btn btn-danger btn-xs change-av" %>
+					<%= link_to 'CHANGE TO AVAILABLE', make_car_available_path(car), :remote => true, class: "btn btn-danger btn-xs change-av" %>
 				<% end %>
-				</div>										
+				</div>									
 			</div>	
 		</div>
     <% end %>
@@ -42,6 +40,6 @@
 <% end %>
 <script>
 $( ".change-av" ).click(function() {
-$( ".holder" ).html('<h3>Car is avilable</h3><img src="/assets/yes.png" width="150" height="150"/>');
+$( this ).parent().html('<h3>Car is avilable</h3><img src="/assets/yes.png" width="150" height="150"/>');
 });
 </script>
