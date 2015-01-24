@@ -1,24 +1,96 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+<div class="col-lg-8">
+<div class="jumbotron">	
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width: 640px;">
+	<ol class="carousel-indicators">
+	 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+	 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+	 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+	</ol>
+    <div class="carousel-inner" role="listbox">
+     <div class="item active">
+      <%= image_tag car.photo1.url(:medium) %>
+     </div>
+     <div class="item">
+      <%= image_tag car.photo2.url(:medium) %>
+     </div>
+     <div class="item">
+      <%= image_tag car.photo3.url(:medium) %>
+     </div>    
+    </div>
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	    <span class="glyphicon glyphicon-chevron-left"></span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	    <span class="glyphicon glyphicon-chevron-right"></span>
+	  </a>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="jumbotron">		
+	<h3><%= car.name%></h3>
+	<small><%= car.description%></small>
+	<h3 class="text-danger">Comfort type: <%= car.comfort_type.try(:name)%></h3>	
+	<h4 class="text-info">Price per day: <%= number_to_currency(car.comfort_type.try(:price), :unit => "zł")%></h4>	
+	<% if  car.available == true %>
+	<h3>Car is avilable</h3>
+	<%= image_tag("yes.png", size: "150x150") %>
+	<% elsif  car.available == false%>
+	<% last_rent = Rent.where(car_id: car.id).last.created_at%>
+	<% no_of_days = Rent.where(car_id: car.id).last.no_of_days%>
+	<h4 class="text-danger">Car is not avilable until: <br /> <%=(last_rent + no_of_days.day).to_formatted_s(:short)%></h4>	
+	<%= image_tag("no.png", size: "150x150") %>		
+	<% end %>
+</div>		
+</div>	
+</div>
+<% if current_user.try(:admin?) %>
+<% if  car.available == true %>
+<div class="row">
+<div class="col-lg-4">
+</div>	
+<div class="col-lg-4">
+<div class="well bs-component">
+<div id="rent" class="alert alert-dismissable alert-danger">
+</div>	
+<script>$('#rent').hide();</script>		
+<%= form_for(@rent, remote: true, :html => { :class => 'form-horizontal' }) do |f| %> 
+<legend>Rent</legend>
 
-<p>
-  <strong>Name:</strong>
-  <%= @car.name %>
-</p>
+  <div class="form-group">
+    <%= f.label "Select number of days", :class => 'col-lg-3 control-label' %>
+    <div class="col-lg-6">
+    <%= f.select :no_of_days, (1..15) %>
+    </div>
+  </div> 
 
-<p>
-  <strong>Description:</strong>
-  <%= @car.description %>
-</p>
-
-<p>
-  <strong>Comfort type:</strong>
-  <%= @car.comfort_type %>
-</p>
-
-<p>
-  <strong>Available:</strong>
-  <%= @car.available %>
-</p>
-
-<%= link_to 'Edit', edit_car_path(@car) %> |
-<%= link_to 'Back', cars_path %>
+  <%= f.hidden_field :car_id, :value => car.id %> 
+  <div class="form-group">
+  	<div class="col-lg-6 col-lg-offset-3">
+    <%= f.submit "Rent car", :class => 'btn btn-primary' %>
+  	</div>
+  </div>    
+<% end %>
+</div>
+</div>
+<div class="col-lg-4">
+</div>
+</div>
+<% end %>
+<div class="row">
+<div class="col-lg-4">
+</div>	
+<div class="col-lg-4">
+<%= link_to 'Edit', edit_car_path(car), :class => 'btn btn-primary' %>
+<%= link_to 'Back', cars_path, :class => 'btn btn-info' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              car_path(car),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>
+<div class="col-lg-4">
+</div>
+</div>
+<% end %>

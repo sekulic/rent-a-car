@@ -16,6 +16,8 @@ gem 'twitter-bootswatch-rails-helpers'
 gem 'therubyracer'
 gem "paperclip", "~> 4.2"
 gem 'aws-sdk', '~> 1.5.7'
+gem 'decent_exposure'
+gem 'devise'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'

@@ -6,16 +6,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Rent-a-car</a>
+          <a class="navbar-brand" href="#">RENT-A-CAR</a>
         </div>
         <div class="navbar-collapse collapse">
         	
      <ul class="nav navbar-nav">
             <li class="<%=is_active_page?(root_path)%>"><%= link_to "Home", root_path %></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Subcategories <b class="caret"></b></a>
-      </li>  
-    </ul>                                                           
-        </div><!--/.nav-collapse -->
+	        <% if current_user.try(:admin?) %>
+	        <li class="<%=is_active_page?(comfort_types_path)%>"><%= link_to "Manage Comfort types", comfort_types_path %></li>
+            <% end %>
+     </ul>  
+     <ul class="nav navbar-nav navbar-right">
+       <li><% if user_signed_in? %>
+         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+         <%else%> 
+         <%= link_to "Sign in", new_user_session_path%>
+         <%end%>
+       </li>
+     </ul>                                                             
+        </div>
       </div>
     </div>	

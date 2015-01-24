@@ -1,33 +1,84 @@
-<%= form_for(@car) do |f| %>
-  <% if @car.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved:</h2>
-
-      <ul>
-      <% @car.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for car, :html => { :multipart => true }, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if car.errors.any? %>
+    <div class="row">
+    	<div class="row">
+    	<div class="col-lg-2">
+    	</div>
+    	<div class="col-lg-8">
+    		<div class="alert alert-dismissable alert-danger">
+    		  <strong><%= pluralize(car.errors.count, "error") %> prohibited this photo_post from being saved:</strong>
+	    	  <ul>
+		      <% car.errors.full_messages.each do |message| %>
+		        <li><%= message %></li>
+		      <% end %>
+		      </ul>
+    		</div>
+    	</div>  	      
+    	<div class="col-lg-2">
+    	</div>	      
+    	</div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+
+
+  <div class="form-group">
+    <%= f.label "Car name", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+      <%= f.text_field :name, :class => 'form-control', :id => "Input", :placeholder => "Car name" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+
+  <div class="form-group">
+    <%= f.label "Description", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+      <%= f.text_area :description, :class => 'form-control', :id => "Input", :placeholder => "Description of car" %>
+    </div>
+  </div> 
+  
+  <div class="form-group">
+    <%= f.label "Comfort type", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+ 	<%= f.select :comfort_type_id, comfort_types.collect {|p| [ p.name, p.id ] }, {prompt: 'Select Comfort type'}, :class => 'form-control'%>
+    </div>
+  </div>  
+  
+  <div class="form-group">
+    <%= f.label "Photo1", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+      <%= f.file_field :photo1, :class => 'form-control' %>
+    </div>    
   </div>
-  <div class="field">
-    <%= f.label :comfort_type %><br>
-    <%= f.text_field :comfort_type %>
-  </div>
-  <div class="field">
-    <%= f.label :available %><br>
-    <%= f.check_box :available %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  
+  <div class="form-group">
+    <%= f.label "Photo2", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+      <%= f.file_field :photo2, :class => 'form-control' %>
+    </div>    
+  </div>  
+  
+  <div class="form-group">
+    <%= f.label "Photo3", :class => 'col-lg-2 control-label' %>
+    <div class="col-lg-4">
+      <%= f.file_field :photo3, :class => 'form-control' %>
+    </div>    
+  </div>    
+    
+        
+  <div class="form-group">
+  	<div class="col-lg-4 col-lg-offset-2">
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :available %> Available
+          </label>
+        </div> 
+  	</div>
+  </div>        
+        
+        
+  <div class="form-group">
+  	<div class="col-lg-4 col-lg-offset-2">
+    <%= f.submit "Save", :class => 'btn btn-primary' %>
+  	</div>
+  </div>   
 <% end %>

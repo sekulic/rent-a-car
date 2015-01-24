@@ -1,5 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+ENV['S3_BUCKET_NAME']='rent-a-car1'
+ENV['AWS_ACCESS_KEY_ID'] = 'AKIAIY3WKGTDFKBWN7TA'
+ENV['AWS_SECRET_ACCESS_KEY']   = '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'
+
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
