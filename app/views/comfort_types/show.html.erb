@@ -1,0 +1,35 @@
+<div class="row">
+<div class="col-lg-1">
+</div>
+<div class="col-lg-2">
+	<div class="panel panel-primary">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Name:</h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= comfort_type.name %>
+	  </div>
+	</div>	
+</div>	
+<div class="col-lg-2">
+	<div class="panel panel-primary">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Price per day:</h3>
+	  </div>
+	  <div class="panel-body">
+	    <%= number_to_currency(comfort_type.price, :unit => "zł") %>
+	  </div>
+	</div>		
+</div>	
+<div class="col-lg-7">
+</div>		
+</div>
+<div class="row">
+<div class="col-lg-1">
+</div>
+<div class="col-lg-2">
+<%= link_to 'Edit', edit_comfort_type_path(comfort_type), :class => 'btn btn-primary' %>
+<%= link_to 'Back', comfort_types_path, :class => 'btn btn-danger' %>
+<div class="col-lg-9">
+</div>		
+</div>	
