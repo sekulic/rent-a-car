@@ -34,12 +34,12 @@
 	<h3 class="text-danger">Comfort type: <%= car.comfort_type.try(:name)%></h3>	
 	<h4 class="text-info">Price per day: <%= number_to_currency(car.comfort_type.try(:price), :unit => "zł")%></h4>	
 	<% if  car.available == true %>
-	<h3>Car is avilable</h3>
+	<h3>Car is available</h3>
 	<%= image_tag("yes.png", size: "150x150") %>
 	<% elsif  car.available == false%>
 	<% last_rent = Rent.where(car_id: car.id).last.created_at%>
 	<% no_of_days = Rent.where(car_id: car.id).last.no_of_days%>
-	<h4 class="text-danger">Car is not avilable until: <br /> <%=(last_rent + no_of_days.day).to_formatted_s(:short)%></h4>	
+	<h3 class="text-danger">Car is not available until: <br /> <%=(last_rent + no_of_days.day).to_formatted_s(:short)%></h3>	
 	<%= image_tag("no.png", size: "150x150") %>		
 	<% end %>
 </div>		
